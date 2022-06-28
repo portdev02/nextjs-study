@@ -7,3 +7,7 @@ export default function Table({children} : any) {
         </>
     )
 }
+
+// export async function getServerSideProps() {
+    
+// }

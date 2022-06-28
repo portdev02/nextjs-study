@@ -37,6 +37,7 @@ export default function LoginForm() {
                 console.log(response.data.accessToken)
                 dispatch(login({user: form.email, token : response.data.accessToken}))
                 setAuthToken(user.token)
+                checkToken()
             }
         } catch (error: any) {
             // console.log(error)
@@ -49,6 +50,11 @@ export default function LoginForm() {
                 //
             }
         }
+    }
+
+    const checkToken = async() => {
+        const res = await axios.get("http://localhost:3000/auth/user")
+        console.log(res)
     }
 
 

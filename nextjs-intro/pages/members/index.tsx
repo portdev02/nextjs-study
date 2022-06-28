@@ -1,3 +1,4 @@
+import axios from "axios";
 import ContentCommon from "../../components/Common/ContentCommon";
 import Table from "../../components/Memebers/Table";
 import TableCell from "../../components/Memebers/TableCell";
@@ -127,3 +128,7 @@ export default function Members() {
         </>
     );
 }
+
+// export async function getServerSideProps() {
+    
+// }
