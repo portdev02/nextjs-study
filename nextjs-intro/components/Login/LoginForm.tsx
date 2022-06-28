@@ -1,4 +1,3 @@
-import axios from "axios";
 import apiClient from "../../api/apiClinet";
 import React, { useState } from "react"
 import { useSelector, useDispatch } from "react-redux";
@@ -25,32 +24,32 @@ export default function LoginForm() {
 
     const submitOnClick = async (e: React.FormEvent) => {
         e.preventDefault();
-        try {
+        // try {
             const response = await apiClient.post("/auth/login", 
                 {username: form.email, password: form.password})
             if(response.status === 200) {
-                console.log(response)
-                console.log(response.data.accessToken)
                 dispatch(login({user: form.email, token : response.data.accessToken}))
                 setAuthToken(user.token)
                 checkToken()
             }
-        } catch (error: any) {
-            // console.log(error)
-            if(error.response.status === 401) {
-                alert('로그인 실패')
-            }
-            else if (error.response.status === 400) {
-                alert("필수 Parameter가 전달되지 않음")
-            } else {
-                //
-            }
-        }
+        // } catch (error: any) {
+        //     // console.log(error)
+        //     if(error.response.status === 401) {
+        //         alert('로그인 실패')
+        //     }
+        //     else if (error.response.status === 400) {
+        //         alert("status 400 error")
+        //     } else {
+        //         //
+        //     }
+        // }
     }
 
     const checkToken = async() => {
         const res = await apiClient.get("/auth/user")
         console.log(res)
+        console.log(localStorage.getItem("accessToken"))
+        console.log(localStorage.getItem("refreshToken"))
     }
 
     const logoutOnClick = () => {
@@ -76,6 +75,7 @@ export default function LoginForm() {
               </div>
             </div>
             <Button onClick={submitOnClick} text="로그인"/>
+            <Button onClick={checkToken} text="유효성"/>
             <Button onClick={logoutOnClick} text="로그아웃" />
             <style jsx>
                 {`

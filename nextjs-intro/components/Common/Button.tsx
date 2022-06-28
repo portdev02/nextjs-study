@@ -2,7 +2,7 @@ export default function Button({text, onClick} : any ) {
     return (
         <>
             <div className="common_btn_area type_align_center type_login">
-              <a href="" className="common_btn type_primary" onClick={onClick}>{text}</a>
+              <a href="#" className="common_btn type_primary" onClick={onClick}>{text}</a>
             </div>
             <style jsx>
                 {`
