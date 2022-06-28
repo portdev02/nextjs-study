@@ -1,15 +1,60 @@
 import axios from "axios";
+import { useMemo } from "react";
 import ContentCommon from "../../components/Common/ContentCommon";
 import Table from "../../components/Memebers/Table";
 import TableCell from "../../components/Memebers/TableCell";
 
 export default function Members() {
-    const mockupData = [
+    const columnData = useMemo(() => [
+        {
+            accessor: 'type',
+            Header: '회원유형'
+        },
+        {
+            accessor: 'memberNum',
+            Header: '회원번호'
+        },
+        {
+            accessor: 'joinDate',
+            Header: '회원가입일시'
+        },
+        {
+            accessor: 'name',
+            Header: '이름(담당자명)'
+        },
+        {
+            accessor: 'phone',
+            Header: '연락처'
+        },
+        {
+            accessor: 'email',
+            Header: '이메일'
+        },
+        {
+            accessor: 'businessName',
+            Header: '사업자명'
+        },
+        {
+            accessor: 'businessNumber',
+            Header: '사업자번호'
+        },
+        {
+            accessor: 'recent',
+            Header: '최근접속'
+        },
+        {
+            accessor: 'carInfo',
+            Header: '차량 종류/번호'
+        },
+    ], []);
+
+    const mockupData = useMemo(() => [
                         {"type" : "차주", "memberNum" : "10", "joinDate": "19/11/11 16:10", "name": "김인수", "phone" : "010-1234-5678",
-                        "businessName": "한국카캐리어", "businessNumber" : "123-12-12345", "carInfo": "full tailer"},
+                        "businessName": "한국카캐리어", "businessNumber" : "123-12-12345", "recent":"19/11/11 16:10", "carInfo": "full tailer"},
                         {"type" : "차주", "memberNum" : "10", "joinDate": "19/11/11 16:10", "name": "김인수", "phone" : "010-1234-5678",
-                        "businessName": "한국카캐리어", "businessNumber" : "123-12-12345", "carInfo": "full tailer"},
-                    ];
+                        "businessName": "한국카캐리어", "businessNumber" : "123-12-12345", "recent":"19/11/11 16:10", "carInfo": "full tailer"},
+                    ], []);
+
     return (
         <>
             {/* <!-- CONTENT --> */}
@@ -85,8 +130,8 @@ export default function Members() {
                             <caption className="hide">
                             목록 제목
                             </caption>
-                            <TableCell datas={mockupData}/>                         
-                            </Table>
+                            <TableCell column={columnData} datas={mockupData}/>                         
+                        </Table>
                         {/* <!-- 공통 페이징 --> */}
                         <div className="common_paginate_area">
                         <a href="" className="btn type_direction type_first">
@@ -124,7 +169,7 @@ export default function Members() {
                         <a href="">`{'>'}`</a>
                         <a href="">`{'>>'}`</a>
                         </span>
-      </ContentCommon>        
+      </ContentCommon>    
         </>
     );
 }

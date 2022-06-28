@@ -1,9 +1,9 @@
-import axios from "axios";
+import apiClient from "../api/apiClinet";
 
 export default function setAuthToken(token: number) {
     if(token) {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        apiClient.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     } else {
-        delete axios.defaults.headers.common['Authorization'];
+        delete apiClient.defaults.headers.common['Authorization'];
     }
 }

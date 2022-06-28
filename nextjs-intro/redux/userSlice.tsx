@@ -26,8 +26,6 @@ export const userSlice = createSlice({
         login: (state, action) => {
             state.isAuthenticated = true;
             state.value = action.payload;
-            // localStorage.setItem("user", action.payload);
-            // localStorage.setItem("token", action.payload.token);
         },
         logout: (state) => {
             state.isAuthenticated = false;
@@ -36,8 +34,6 @@ export const userSlice = createSlice({
                 token: ""
 
             } /* null */;
-            // localStorage.removeItem("user")
-            // localStorage.removeItem("token")
         },
     },
 });

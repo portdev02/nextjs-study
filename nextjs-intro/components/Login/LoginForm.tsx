@@ -1,7 +1,8 @@
 import axios from "axios";
+import apiClient from "../../api/apiClinet";
 import React, { useState } from "react"
 import { useSelector, useDispatch } from "react-redux";
-import { login } from "../../redux/userSlice";
+import { login, logout } from "../../redux/userSlice";
 import setAuthToken from "../../utils/setAuthToken";
 import Button from "../Common/Button";
 
@@ -25,13 +26,8 @@ export default function LoginForm() {
     const submitOnClick = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const response = await axios.post("http://localhost:3000/auth/login", 
-                JSON.stringify({username: form.email, password: form.password}), {
-                    headers: {
-                        "Content-Type": 'application/json',
-                        withCredentials: true, 
-                    }
-            })
+            const response = await apiClient.post("/auth/login", 
+                {username: form.email, password: form.password})
             if(response.status === 200) {
                 console.log(response)
                 console.log(response.data.accessToken)
@@ -53,8 +49,12 @@ export default function LoginForm() {
     }
 
     const checkToken = async() => {
-        const res = await axios.get("http://localhost:3000/auth/user")
+        const res = await apiClient.get("/auth/user")
         console.log(res)
+    }
+
+    const logoutOnClick = () => {
+        dispatch(logout)
     }
 
 
@@ -76,6 +76,7 @@ export default function LoginForm() {
               </div>
             </div>
             <Button onClick={submitOnClick} text="로그인"/>
+            <Button onClick={logoutOnClick} text="로그아웃" />
             <style jsx>
                 {`
                 .login_form_area {
