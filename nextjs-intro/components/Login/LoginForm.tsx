@@ -37,8 +37,8 @@ export default function LoginForm() {
                 {username: form.email, password: form.password})
             if(response.status === 200) {
                 console.log("로그인 성공시 res data: ", response)
-                dispatch(login({user: form.email, token : response.data.accessToken}))
-                setAuthToken(user.token)
+                dispatch(login({user: form.email, accessToken : response.data.accessToken, refreshToken: response.data.refreshToken}))
+                setAuthToken(user.accessToken)
                 console.log("!!!!localstorage persist:root에 있는 값 : ", localStorage.getItem("persist:root"))
                 console.log("localstorage에 있는 accessToken : ", localStorage.getItem("accessToken"))
                 checkToken()

@@ -1,16 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-const getInitialValues = () => {
-    let isLogin: boolean = false;
-    const token = localStorage.getItem("acessToken")
-    if(token) {
-        isLogin = true;
-    }
-    return {
-        token
-    }
-} 
-
 const initialState = {
     isAuthenticated : false,
     value : {
@@ -28,7 +17,9 @@ export const userSlice = createSlice({
         login: (state, action) => {
             state.isAuthenticated = true;
             state.value = action.payload;
-            localStorage.setItem("accessToken", action.payload.token)
+            localStorage.setItem("accessToken", action.payload.accessToken)
+            localStorage.setItem("refreshToken", action.payload.refreshToken)
+
         },
         logout: (state) => {
             state.isAuthenticated = false;
