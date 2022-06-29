@@ -14,6 +14,14 @@ export default function LoginForm() {
     const user = useSelector((state : any) => state.auth.value);
     const dispatch = useDispatch();
 
+    const checkToken = async() => {
+        console.log("!!!!user.token redux에 저장되어 있는 token: ", user.token)
+        const res = await apiClient.get("/auth/user")
+        console.log("유효성 검사에서 받아오는 data", res)
+        
+        console.log(localStorage.getItem("refreshToken"))
+    }
+
     const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setForm({
@@ -24,15 +32,18 @@ export default function LoginForm() {
 
     const submitOnClick = async (e: React.FormEvent) => {
         e.preventDefault();
-        // try {
+        try {
             const response = await apiClient.post("/auth/login", 
                 {username: form.email, password: form.password})
             if(response.status === 200) {
+                console.log("로그인 성공시 res data: ", response)
                 dispatch(login({user: form.email, token : response.data.accessToken}))
                 setAuthToken(user.token)
+                console.log("!!!!localstorage persist:root에 있는 값 : ", localStorage.getItem("persist:root"))
+                console.log("localstorage에 있는 accessToken : ", localStorage.getItem("accessToken"))
                 checkToken()
             }
-        // } catch (error: any) {
+        } catch (error: any) {
         //     // console.log(error)
         //     if(error.response.status === 401) {
         //         alert('로그인 실패')
@@ -43,13 +54,7 @@ export default function LoginForm() {
         //         //
         //     }
         // }
-    }
-
-    const checkToken = async() => {
-        const res = await apiClient.get("/auth/user")
-        console.log(res)
-        console.log(localStorage.getItem("accessToken"))
-        console.log(localStorage.getItem("refreshToken"))
+        }
     }
 
     const logoutOnClick = () => {

@@ -3,6 +3,7 @@ import axios from 'axios';
 const baseURL = "http://localhost:3000"
 
 const apiClient = axios.create({
+    timeout: 10000,
     baseURL: baseURL, 
 });
 
@@ -28,7 +29,9 @@ apiClient.interceptors.response.use(
         response: { status },
       } = error;
       if (status === 401) {
+        // 401 반환
         if (error.response.data.message === "jwt expired") {
+          // res msg가 jwt expired일때, 즉 accessToken 기한이 만료된 경우
           const originalRequest = config;
           const refreshToken = await localStorage.getItem("refreshToken");
 
