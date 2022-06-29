@@ -36,6 +36,10 @@ const nextConfig = {
       {
         source: "/auth/user",
         destination: `${SERVER}/auth/user`
+      },
+      {
+        source: "/auth/token/refresh",
+        destination: `${SERVER}/auth/token/refresh`
       }
     ]
 

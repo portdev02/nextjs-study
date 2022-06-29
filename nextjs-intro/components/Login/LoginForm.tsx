@@ -14,11 +14,9 @@ export default function LoginForm() {
     const user = useSelector((state : any) => state.auth.value);
     const dispatch = useDispatch();
 
-    const checkToken = async() => {
-        console.log("!!!!user.token redux에 저장되어 있는 token: ", user.token)
+    const checkToken = async() => {      
         const res = await apiClient.get("/auth/user")
-        console.log("유효성 검사에서 받아오는 data", res)
-        
+        console.log("유효성 검사에서 받아오는 data", res)        
         console.log(localStorage.getItem("refreshToken"))
     }
 
@@ -30,7 +28,7 @@ export default function LoginForm() {
         });       
     }
 
-    const submitOnClick = async (e: React.FormEvent) => {
+    const submitOnClick = async (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
         try {
             const response = await apiClient.post("/auth/login", 
@@ -38,10 +36,8 @@ export default function LoginForm() {
             if(response.status === 200) {
                 console.log("로그인 성공시 res data: ", response)
                 dispatch(login({user: form.email, accessToken : response.data.accessToken, refreshToken: response.data.refreshToken}))
-                setAuthToken(user.accessToken)
-                console.log("!!!!localstorage persist:root에 있는 값 : ", localStorage.getItem("persist:root"))
+                await setAuthToken(localStorage.getItem("accessToken"))
                 console.log("localstorage에 있는 accessToken : ", localStorage.getItem("accessToken"))
-                checkToken()
             }
         } catch (error: any) {
         //     // console.log(error)
@@ -79,9 +75,9 @@ export default function LoginForm() {
                 <label htmlFor="saveid" className="input_label">로그인 상태 유지하기</label>
               </div>
             </div>
-            <Button onClick={submitOnClick} text="로그인"/>
-            <Button onClick={checkToken} text="유효성"/>
-            <Button onClick={logoutOnClick} text="로그아웃" />
+            <Button onClick={() => submitOnClick} text="로그인"/>
+            <Button onClick={() => checkToken} text="유효성"/>
+            <Button onClick={() => logoutOnClick} text="로그아웃" />
             <style jsx>
                 {`
                 .login_form_area {

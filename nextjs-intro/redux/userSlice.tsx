@@ -30,6 +30,12 @@ export const userSlice = createSlice({
             }; 
             localStorage.clear();
         },
+        reToken: (state, action) => {
+            state.isAuthenticated = true;
+            state.value = action.payload;
+            localStorage.setItem("accessToken", action.payload.accessToken)
+            localStorage.setItem("refreshToken", action.payload.refreshToken)
+        }
     },
 });
 

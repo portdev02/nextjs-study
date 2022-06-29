@@ -1,4 +1,6 @@
 export default function Table({children} : any) {
+    // table 껍데기
+    // {children}에 속 내용이 들어감
     return (
         <>
         <div className="table_area scrollable_table_area">

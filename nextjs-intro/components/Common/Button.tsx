@@ -1,8 +1,13 @@
-export default function Button({text, onClick} : any ) {
+interface ButtonProps {
+    text: String;
+    onClick?: () => void;
+    className?: String;
+}
+export default function Button(props: ButtonProps) {
     return (
         <>
-            <div className="common_btn_area type_align_center type_login">
-              <a href="#" className="common_btn type_primary" onClick={onClick}>{text}</a>
+            <div className={`common_btn_area type_align_center type_login ${props.text}`}>
+              <a href="#" className="common_btn type_primary" onClick={props.onClick}>{props.text}</a>
             </div>
             <style jsx>
                 {`
@@ -68,6 +73,13 @@ export default function Button({text, onClick} : any ) {
                     font-size: 1.6rem;
                     font-weight: bold;
                     vertical-align: top;
+                }
+                .차주 {
+                    background-color: aqua;
+                }
+                
+                [class*='화주'] {
+                    background-color:blueviolet;
                 }
                 `}
             </style>
